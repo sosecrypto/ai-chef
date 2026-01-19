@@ -3,9 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'models/ingredient.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/onboarding_screen.dart';
+import 'screens/receipt_scan_screen.dart';
+import 'screens/ingredient_review_screen.dart';
 
 /// 앱 라우터 Provider
 final routerProvider = Provider<GoRouter>((ref) {
@@ -41,6 +44,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/',
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/receipt-scan',
+        builder: (context, state) => const ReceiptScanScreen(),
+      ),
+      GoRoute(
+        path: '/receipt-result',
+        builder: (context, state) {
+          final result = state.extra as ReceiptOcrResult;
+          return IngredientReviewScreen(ocrResult: result);
+        },
       ),
     ],
   );
